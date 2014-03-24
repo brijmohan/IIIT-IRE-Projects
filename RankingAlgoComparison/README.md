@@ -9,6 +9,9 @@ Running the TF:
  
 	`
 	sh index.sh <path to corpus> <path to folder where indexd needs to be stored> 
+	`
+	
+	`
 	sh query.sh <path to stored index>
 	`
 This will prompt for following inputs:
