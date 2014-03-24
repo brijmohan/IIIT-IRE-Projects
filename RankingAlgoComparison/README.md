@@ -14,6 +14,8 @@ Running the TF:
 	`
 	sh query.sh <path to stored index>
 	`
+	
+	
 This will prompt for following inputs:
 - Number of queries
 - Queries to be searched
