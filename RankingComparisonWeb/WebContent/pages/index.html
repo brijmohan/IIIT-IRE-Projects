@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html data-ng-app="MyApp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ranking Algorithm Comparison - Team 8</title>
+
+<!-- CSS files -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css"
+	type="text/css" />
+<link rel="stylesheet" href="css/app.css" type="text/css" />
+
+<!-- Sripts -->
+<script type="text/javascript" src="js/lib/angular.min.js"></script>
+<script type="text/javascript" src="js/lib/angular-animate.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.js"></script>
+<script type="text/javascript" src="js/lib/highcharts.js"></script>
+<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/controllers/rank.js"></script>
+</head>
+<body>
+	<h1 class="text-center">
+		8. Ranking Algorithm Comparison <small>Project by Team 11</small>
+	</h1>
+	<div class="container" data-ng-controller="MainController">
+		<form role="form">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Enter your query</label> <input
+					type="text" class="form-control" id="queryStr"
+					data-ng-model="queryStr" placeholder="Enter your query">
+			</div>
+			<div class="form-group">
+				<label>Search Algorithms: </label>
+				<label class="checkbox-inline"><input type="checkbox"
+					id="tfidf" value="1" data-ng-model="tfidf.showresults">
+					TF-IDF</label> <label class="checkbox-inline"><input
+					type="checkbox" id="pagerank" value="2"
+					data-ng-model="pagerank.showresults"> Page Rank</label> <label
+					class="checkbox-inline"><input type="checkbox" id="hybrid"
+					value="3" data-ng-model="hybrid.showresults"> Hybrid</label>
+			</div>
+			<div class="form-group">
+				<label>Additional Options: </label>
+				<label for="normalizeQuery" class="checkbox-inline">
+					<input type="checkbox" id="normalizeQuery" value="1"
+					data-ng-model="normalize">
+					Normalize TF-IDF Score with document size
+				</label>
+				<label class="checkbox-inline">
+					<select data-ng-model="searchResultCount">
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					Number of Results
+				</label>
+				<p class="text-warning" data-ng-show="normalize">[Caution: Enabling normalization can slow down query time upto 50x-350x times]</p>
+			</div>
+			<button type="submit" class="btn btn-success"
+				data-ng-click="submitSearchForm()">Search</button>
+			<button type="button" class="btn btn-info"
+				data-ng-click="clearSearchForm()">Clear</button>
+		</form>
+
+		<p></p>
+		<button type="button" class="btn btn-default"
+			data-ng-click="showHideLuceneResults()">{{showLuceneButtonText}}</button>
+		<button class="btn btn-primary" data-toggle="modal" data-target=".analysis-chart-modal">
+		  Show Comparison Chart
+		</button>
+		<img data-ng-show="lucene.loader" src="images/ajax-loader-1.gif" />
+		<div class="lucene-results" data-ng-show="lucene.showresults">
+			<h2>
+				<small>Lucene Results</small>
+			</h2>
+			<hr>
+			<table class="table qresults table-hover">
+				<tbody>
+					<tr data-ng-repeat="lres in lucene.results">
+						<td>{{$index + 1}}.</td>
+						<td>{{lres}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="clearfix">
+			<hr>
+		</div>
+
+		<div class="result">
+			<div class="row">
+				<div class="col-md-4 bg-warning" style="border-right: 1px solid #ccc">
+					<p class="text-center">
+						<strong>TF-IDF</strong> <img data-ng-show="tfidf.loader"
+							src="images/ajax-loader-1.gif" />
+					</p>
+					<div data-ng-show="tfidf.showresults">
+						<div>
+							Results fetched in <strong>{{tfidf.timeTaken}}s</strong>.
+						</div>
+						<div>
+							Accuracy : <strong>{{tfidf.accuracy}}%</strong>.
+						</div>
+						<table class="table qresults">
+							<tbody>
+								<tr data-ng-repeat="res in tfidf.results.list1"
+									data-ng-class="{'bg-success': res.matching}">
+									<td>{{$index + 1}}.</td>
+									<td>{{res.name}}</td>
+									<td>
+										<div class="progress">
+											<div class="progress-bar {{res.progressBarClass}}"
+												style="width: {{res.score}}%">
+												<span>{{res.score.toFixed(2)}}%</span>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<p data-ng-show="tfidf.seemorelink" id="seemorelink"
+							data-ng-click="tfidf.moreResults = !tfidf.moreResults">See
+							more...</p>
+						<table class="table qresults" data-ng-show="tfidf.moreResults">
+							<tbody>
+								<tr data-ng-repeat="res in tfidf.results.list2"
+									data-ng-class="{'bg-success': res.matching}">
+									<td>{{$index + 11}}.</td>
+									<td>{{res.name}}</td>
+									<td>
+										<div class="progress">
+											<div class="progress-bar {{res.progressBarClass}}"
+												style="width: {{res.score}}%">
+												<span>{{res.score.toFixed(2)}}%</span>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-4 bg-warning" style="border-right: 1px solid #ccc">
+					<p class="text-center">
+						<strong>Page Rank</strong> <img data-ng-show="pagerank.loader"
+							src="images/ajax-loader-1.gif" />
+					</p>
+					<div data-ng-show="pagerank.showresults">
+						<div>
+							Results fetched in <strong>{{pagerank.timeTaken}}s</strong>.
+						</div>
+						<div>
+							Accuracy : <strong>{{pagerank.accuracy}}%</strong>.
+						</div>
+						<table class="table qresults">
+							<tbody>
+								<tr data-ng-repeat="res in pagerank.results.list1"
+									data-ng-class="{'bg-success': res.matching}">
+									<td>{{$index + 1}}.</td>
+									<td>{{res.name}}</td>
+									<td>
+										<div class="progress">
+											<div class="progress-bar {{res.progressBarClass}}"
+												style="width: {{res.score}}%">
+												<span>{{res.score.toFixed(2)}}%</span>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<p data-ng-show="pagerank.seemorelink" id="seemorelink"
+							data-ng-click="pagerank.moreResults = !pagerank.moreResults">See
+							more...</p>
+						<table class="table qresults" data-ng-show="pagerank.moreResults">
+							<tbody>
+								<tr data-ng-repeat="res in pagerank.results.list2"
+									data-ng-class="{'bg-success': res.matching}">
+									<td>{{$index + 11}}.</td>
+									<td>{{res.name}}</td>
+									<td>
+										<div class="progress">
+											<div class="progress-bar {{res.progressBarClass}}"
+												style="width: {{res.score}}%">
+												<span>{{res.score.toFixed(2)}}%</span>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-4 bg-info">
+					<p class="text-center">
+						<strong>Hybrid</strong> <img data-ng-show="hybrid.loader"
+							src="images/ajax-loader-1.gif" />
+					</p>
+					<ol>
+						<li data-ng-repeat="res in hybrid.results">{{res}}</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer"></div>
+	<div class="modal fade analysis-chart-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">Ranking Algorithms Comparison Chart</h4>
+		  	</div>
+	      	<div class="modal-body">
+	      		<div id="graphcontainer"></div>
+	      	</div>
+		    <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		    </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+</html>

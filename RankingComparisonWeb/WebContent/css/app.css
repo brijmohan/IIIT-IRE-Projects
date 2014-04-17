@@ -1,0 +1,17 @@
+table.qresults tbody tr td {
+	border: none;
+	width: 60%;
+}
+table.qresults tbody tr td:FIRST-CHILD {
+	border: none;
+	width: 5%;
+}
+#seemorelink:HOVER{
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.footer {
+	min-height: 200px;
+}
+

@@ -1,1 +1,1 @@
-java -cp ".:../*" Query $1
+java -cp ".:../*" brij.iiit.iremajor.core.Query $1
