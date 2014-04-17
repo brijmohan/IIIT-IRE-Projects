@@ -54,19 +54,19 @@ SourceCode/PageRank: PageRank generation
 Prerequisites for running the application:
 ==============================================
 A. TF-IDF module needs:
-	1. index.txt - primary tf-idf index
-	2. sindex.txt - secondary index
-	3. conf.txt - tells the collection size
-	4. docIdTitleMap.txt - primary document-title map
-	5. sDocMap.txt - secondary document-title map
+1. index.txt - primary tf-idf index
+2. sindex.txt - secondary index
+3. conf.txt - tells the collection size
+4. docIdTitleMap.txt - primary document-title map
+5. sDocMap.txt - secondary document-title map
 	
 B. PageRank module needs:
-	1. index.txt - primary pagerank index
-	2. sindex.txt - secondary pagerank index
-	3. docIdTitleMap.txt - primary document-title map
-	4. sDocMap.txt - secondary document-title map
+1. index.txt - primary pagerank index
+2. sindex.txt - secondary pagerank index
+3. docIdTitleMap.txt - primary document-title map
+4. sDocMap.txt - secondary document-title map
 
 C. Lucene module needs:
-	1. Lucene index directory as input
+1. Lucene index directory as input
 	
 D. RankingComparisonWeb can be run on Apache Tomcat 7 server.
