@@ -70,3 +70,7 @@ C. Lucene module needs:
 1. Lucene index directory as input
 	
 D. RankingComparisonWeb can be run on Apache Tomcat 7 server.
+
+
+[Check out the video here!](https://www.youtube.com/watch?v=vqEftHTahHU)
+[Check out the slideshow here!](http://www.slideshare.net/brijscooby/slideshow-33644539)
