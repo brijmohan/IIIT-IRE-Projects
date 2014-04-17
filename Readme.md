@@ -1,16 +1,13 @@
-*													*
-*													*
-*						README						*
-*													*
-*													*
-*													*
-
 Codebase:
---SourceCode/RankingComparisonWeb: UI control and search functions
-QueryRest.java: This class declares a REST API interface. Its acts like a middle layer for UI and core Ranking Algorithms.
+================
+
+*SourceCode/RankingComparisonWeb: UI control and search functions
+----------------------------------------------------------------------
+	*QueryRest.java: This class declares a REST API interface. Its acts like a middle layer for UI and core Ranking Algorithms.
 
 
---SourceCode/RankingAlgoComparison: Tf-idf generation & Query module, Pagerank Query module, Lucene
+*SourceCode/RankingAlgoComparison: Tf-idf generation & Query module, Pagerank Query module, Lucene
+-------------------------------------------------------------------------------------------------------
 CalculateScore.java: Computes the score over the sorted TF-IDF index
 CorpusSplitter.java: Util class to split the wikipedia corpus into documents for consumption by Lucene
 DocumentAttributes.java: This is a POJO class to hold document attributes
@@ -36,11 +33,13 @@ WordFrequencyCounter.java: Util to count frequency of words in a text and return
 Word.java: POJO to hold a word along with its frequency
 
 --SourceCode/LuceneTest: Module for Lucene Query testing
+------------------------------------------------------------
 LuceneSearch.java: Query class for Lucene index
 LuceneSearchTest.java: Test class for LuceneSearch.java
 
 
 --SourceCode/PageRank: PageRank generation
+------------------------------------------------
 ComputeRank.java: Computes pagerank value from the outlinks and inlinks file
 ExtMergeSort.java: Generic module to perform external merge sort
 Links.java: Calculates the number of outlinks and there by generates number of inlinks of a particular doc
@@ -50,3 +49,24 @@ SecondaryIndex.java: generates secondary indices
 SortPageRank.java: Sorting final posting list based on pagerank
 TitleIndex.java: Main runnable class
 TreeSort: sort pagerank values
+
+
+Prerequisites for running the application:
+----------------------------------------------
+1. TF-IDF module needs:
+	a. index.txt - primary tf-idf index
+	b. sindex.txt - secondary index
+	c. conf.txt - tells the collection size
+	d. docIdTitleMap.txt - primary document-title map
+	e. sDocMap.txt - secondary document-title map
+	
+2. PageRank module needs:
+	a. index.txt - primary pagerank index
+	b. sindex.txt - secondary pagerank index
+	c. docIdTitleMap.txt - primary document-title map
+	d. sDocMap.txt - secondary document-title map
+
+3. Lucene module needs:
+	a. Lucene index directory as input
+	
+4. RankingComparisonWeb can be run on Apache Tomcat 7 server.
