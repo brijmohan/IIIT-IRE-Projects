@@ -1,72 +1,72 @@
 Codebase:
 ================
 
-*SourceCode/RankingComparisonWeb: UI control and search functions
+SourceCode/RankingComparisonWeb: UI control and search functions
 ----------------------------------------------------------------------
-	*QueryRest.java: This class declares a REST API interface. Its acts like a middle layer for UI and core Ranking Algorithms.
+* QueryRest.java: This class declares a REST API interface. Its acts like a middle layer for UI and core Ranking Algorithms.
 
 
-*SourceCode/RankingAlgoComparison: Tf-idf generation & Query module, Pagerank Query module, Lucene
+SourceCode/RankingAlgoComparison: Tf-idf generation & Query module, Pagerank Query module, Lucene
 -------------------------------------------------------------------------------------------------------
-CalculateScore.java: Computes the score over the sorted TF-IDF index
-CorpusSplitter.java: Util class to split the wikipedia corpus into documents for consumption by Lucene
-DocumentAttributes.java: This is a POJO class to hold document attributes
-DocumentMapperSecondaryIndexer.java: This class creates secondary index for document title map
-DocumentScore.java: POJO class to hold document title, score pairs
-DocumentTitleMapper.java: Util classes for setting getting titles based on document ID
-ExternalSort.java: Util class to join & sort the document posting list externally from seperate chunked files
-Index.java: Main file to run indexing
-MutableInt.java: Integer class for self-incrementing functions
-PageRankDocumentMapper.java: Document title mapper for Pagerank index
-PageRankPosting.java: POJO to hold pagerank postings
-PageRankQuery.java: Main class to handle pagerank queries
-Parser.java: Util class for running SAX parser over wikipedia corpus
-Posting.java: POJO to hold posting list for TF-IDF module
-QueryCache.java: Cache class to hold about 500 posting results
-Query.java: Main class to run queries over TF-IDF index
-Search.java: Util class to run binary search over seconday indexes
-Stemmer.java: Ported stemmer class
-StringSizeEstimator.java: Util class for external sort
-Test.java: Util class for test
-Util.java: Util class for text processing, and vocabulary reading, dumping index to chunked files, etc.
-WordFrequencyCounter.java: Util to count frequency of words in a text and returning a structured format
-Word.java: POJO to hold a word along with its frequency
+* CalculateScore.java: Computes the score over the sorted TF-IDF index
+* CorpusSplitter.java: Util class to split the wikipedia corpus into documents for consumption by Lucene
+* DocumentAttributes.java: This is a POJO class to hold document attributes
+* DocumentMapperSecondaryIndexer.java: This class creates secondary index for document title map
+* DocumentScore.java: POJO class to hold document title, score pairs
+* DocumentTitleMapper.java: Util classes for setting getting titles based on document ID
+* ExternalSort.java: Util class to join & sort the document posting list externally from seperate chunked files
+* Index.java: Main file to run indexing
+* MutableInt.java: Integer class for self-incrementing functions
+* PageRankDocumentMapper.java: Document title mapper for Pagerank index
+* PageRankPosting.java: POJO to hold pagerank postings
+* PageRankQuery.java: Main class to handle pagerank queries
+* Parser.java: Util class for running SAX parser over wikipedia corpus
+* Posting.java: POJO to hold posting list for TF-IDF module
+* QueryCache.java: Cache class to hold about 500 posting results
+* Query.java: Main class to run queries over TF-IDF index
+* Search.java: Util class to run binary search over seconday indexes
+* Stemmer.java: Ported stemmer class
+* StringSizeEstimator.java: Util class for external sort
+* Test.java: Util class for test
+* Util.java: Util class for text processing, and vocabulary reading, dumping index to chunked files, etc.
+* WordFrequencyCounter.java: Util to count frequency of words in a text and returning a structured format
+* Word.java: POJO to hold a word along with its frequency
 
---SourceCode/LuceneTest: Module for Lucene Query testing
+SourceCode/LuceneTest: Module for Lucene Query testing
 ------------------------------------------------------------
-LuceneSearch.java: Query class for Lucene index
-LuceneSearchTest.java: Test class for LuceneSearch.java
+* LuceneSearch.java: Query class for Lucene index
+* LuceneSearchTest.java: Test class for LuceneSearch.java
 
 
---SourceCode/PageRank: PageRank generation
+SourceCode/PageRank: PageRank generation
 ------------------------------------------------
-ComputeRank.java: Computes pagerank value from the outlinks and inlinks file
-ExtMergeSort.java: Generic module to perform external merge sort
-Links.java: Calculates the number of outlinks and there by generates number of inlinks of a particular doc
-LoadinMemory: for loading an intermediate file into memory
-SAXHandler: SAX handlers to parse xml
-SecondaryIndex.java: generates secondary indices
-SortPageRank.java: Sorting final posting list based on pagerank
-TitleIndex.java: Main runnable class
-TreeSort: sort pagerank values
+* ComputeRank.java: Computes pagerank value from the outlinks and inlinks file
+* ExtMergeSort.java: Generic module to perform external merge sort
+* Links.java: Calculates the number of outlinks and there by generates number of inlinks of a particular doc
+* LoadinMemory: for loading an intermediate file into memory
+* SAXHandler: SAX handlers to parse xml
+* SecondaryIndex.java: generates secondary indices
+* SortPageRank.java: Sorting final posting list based on pagerank
+* TitleIndex.java: Main runnable class
+* TreeSort: sort pagerank values
 
 
 Prerequisites for running the application:
-----------------------------------------------
-1. TF-IDF module needs:
-	a. index.txt - primary tf-idf index
-	b. sindex.txt - secondary index
-	c. conf.txt - tells the collection size
-	d. docIdTitleMap.txt - primary document-title map
-	e. sDocMap.txt - secondary document-title map
+==============================================
+A. TF-IDF module needs:
+	1. index.txt - primary tf-idf index
+	2. sindex.txt - secondary index
+	3. conf.txt - tells the collection size
+	4. docIdTitleMap.txt - primary document-title map
+	5. sDocMap.txt - secondary document-title map
 	
-2. PageRank module needs:
-	a. index.txt - primary pagerank index
-	b. sindex.txt - secondary pagerank index
-	c. docIdTitleMap.txt - primary document-title map
-	d. sDocMap.txt - secondary document-title map
+B. PageRank module needs:
+	1. index.txt - primary pagerank index
+	2. sindex.txt - secondary pagerank index
+	3. docIdTitleMap.txt - primary document-title map
+	4. sDocMap.txt - secondary document-title map
 
-3. Lucene module needs:
-	a. Lucene index directory as input
+C. Lucene module needs:
+	1. Lucene index directory as input
 	
-4. RankingComparisonWeb can be run on Apache Tomcat 7 server.
+D. RankingComparisonWeb can be run on Apache Tomcat 7 server.
